@@ -50,18 +50,6 @@ def shorten_link(
         raise HTTPException(status_code=400, detail="link not valid. try adding http[s]://")
 
 
-@router.get("/{short_link}")
-async def redirect(short_link: str, db: Session = Depends(get_db)):
-    link = db.query(URL).filter(URL.id == short_link).first()
-    if not link:
-        raise HTTPException(status_code=404, detail="Link not found")
-    if not link.is_enabled:
-        raise HTTPException(status_code=403, detail="Link is disabled")
-    link.click_count += 1
-    db.commit()
-    return RedirectResponse(link.url, status_code=301)
-
-
 @router.put("/{short_link}/toggle_enabled")
 def toggle_link_enabled(short_link: str, db: Session = Depends(get_db)):
     url = db.query(URL).filter(URL.id == short_link).first()
