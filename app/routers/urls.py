@@ -29,9 +29,14 @@ def shorten_link(
     valid_url = "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$"
 
     if request.short_link:
-        short_link = request.short_link
+        repeat_check = db.query(URL).filter(URL.id == request.short_link).first()
+        if repeat_check:
+            raise HTTPException(status_code=400, detail="Shortlink is already in use")
+        else:
+            short_link = request.short_link
     else:
         short_link = generate_short_link()
+
     if re.match(valid_url, request.long_link):
         link = URL(id=short_link, url=request.long_link, is_enabled=request.is_enabled)
         db.add(link)
