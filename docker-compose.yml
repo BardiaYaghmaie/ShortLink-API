@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - '8776:8776'
+    depends_on:
+      - db
+    environment:
+      - DB_URL=postgresql://postgres:1qaz2wsx@db/shortlinks_DBcontext
+
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1qaz2wsx
+      - POSTGRES_DB=shortlinks_DBcontext
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
