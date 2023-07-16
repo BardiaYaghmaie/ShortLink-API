@@ -3,5 +3,4 @@ uvicorn
 sqlalchemy==2.0.19
 psycopg2-binary
 pydantic~=2.0.3
-
 starlette

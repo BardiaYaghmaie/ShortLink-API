@@ -1,11 +1,12 @@
-from fastapi import FastAPI, Depends, HTTPException, Response, Request
+from fastapi import FastAPI, Depends, HTTPException, Response
+from fastapi.middleware import Middleware
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
-from fastapi.middleware import Middleware
-from middlewares import NoCacheHeaderMiddleware
+
 from app import app
 from app.database import get_db
 from app.models import URL
+from middlewares import NoCacheHeaderMiddleware
 
 app_instance = FastAPI(middleware=[Middleware(NoCacheHeaderMiddleware)])
 
