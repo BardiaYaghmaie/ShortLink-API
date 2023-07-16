@@ -1,12 +1,9 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
-from fastapi.middleware import Middleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from fastapi import Request
 
 
-def add_no_cache_header_middleware(app: FastAPI):
-    async def middleware(request: Request, call_next):
+class NoCacheHeaderMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
         response = await call_next(request)
         response.headers["Cache-Control"] = "no-cache"
         return response
-
-    app.middleware("http")(middleware)

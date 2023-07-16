@@ -2,19 +2,10 @@ from fastapi import FastAPI, Depends, HTTPException, Response, Request
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from fastapi.middleware import Middleware
-from starlette.middleware.base import BaseHTTPMiddleware
-
+from middlewares import NoCacheHeaderMiddleware
 from app import app
 from app.database import get_db
 from app.models import URL
-
-
-class NoCacheHeaderMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next):
-        response = await call_next(request)
-        response.headers["Cache-Control"] = "no-cache"
-        return response
-
 
 app_instance = FastAPI(middleware=[Middleware(NoCacheHeaderMiddleware)])
 
