@@ -3,8 +3,8 @@ from sqlalchemy.orm import sessionmaker
 from .models import Base
 
 # Database setup - local
-engine = create_engine("postgresql://postgres:1qaz2wsx@localhost/shortlinks_DBcontext")
-# engine = create_engine("postgresql://postgres:1qaz2wsx@shortlink-db/shortlinks_DBcontext")
+# engine = create_engine("postgresql://postgres:1qaz2wsx@localhost/shortlinks_DBcontext")
+engine = create_engine("postgresql://postgres:1qaz2wsx@shortlink-db/shortlinks_DBcontext")
 SessionLocal = sessionmaker(engine)
 
 

@@ -1,3 +1,7 @@
+from datetime import datetime
+import pytz
+
+
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware import Middleware
 from fastapi.responses import RedirectResponse
@@ -28,9 +32,12 @@ async def redirect(
     # Capture click data
     ip_address = request.client.host
     user_agent = parse(request.headers.get("User-Agent"))
+    tehran_timezone = pytz.timezone("Asia/Tehran")
+    timestamp= datetime.now(tz=tehran_timezone)
+    print(timestamp)
     browser = user_agent.browser.family
     os = user_agent.os.family + ' ' + user_agent.os.version_string
-    click_data = ClickData(url_id=link.id, ip_address=ip_address, browser=browser, os=os)
+    click_data = ClickData(url_id=link.id, ip_address=ip_address, browser=browser, os=os, timestamp=timestamp)
     db.add(click_data)
 
     db.commit()

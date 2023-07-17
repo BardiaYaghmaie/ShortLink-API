@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..models import URL, ClickData
@@ -20,6 +22,7 @@ class ClickDataResponse(BaseModel):
     ip_address: str
     browser: str
     os: str
+    timestamp: datetime
 
 
 @router.get("/")
@@ -50,7 +53,8 @@ def get_url(short_link: str, db: Session = Depends(get_db)):
             url_id=click.url_id,
             ip_address=click.ip_address,
             browser=click.browser,
-            os=click.os
+            os=click.os,
+            timestamp=click.timestamp
         ) for click in click_data
     ]
 
