@@ -33,7 +33,7 @@ async def redirect(
     ip_address = request.client.host
     user_agent = parse(request.headers.get("User-Agent"))
     tehran_timezone = pytz.timezone("Asia/Tehran")
-    timestamp= datetime.now(tz=tehran_timezone)
+    timestamp = datetime.now(tz=tehran_timezone)
     print(timestamp)
     browser = user_agent.browser.family
     os = user_agent.os.family + ' ' + user_agent.os.version_string
