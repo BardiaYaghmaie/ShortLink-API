@@ -30,7 +30,7 @@ async def redirect(
     link.click_count += 1
 
     # Capture click data
-    ip_address = request.client.host
+    ip_address = request.headers.get("X-Forwarded-For")
     user_agent = parse(request.headers.get("User-Agent"))
     tehran_timezone = pytz.timezone("Asia/Tehran")
     timestamp = datetime.now(tz=tehran_timezone)
